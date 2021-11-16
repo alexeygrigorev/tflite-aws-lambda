@@ -131,8 +131,10 @@ The process is the same, except a few thigs:
 
 * Instead of `PYTHON` you need to set `CI_BUILD_PYTHON` 
 * Instead of running `build_pip_package.sh`, run `build_pip_package_with_cmake.sh`
+* You need more RAM. On my laptop with 16 Gb I had problems, so I ended up using an ec2 instance (`r5a.2xlarge`)
 
 You also need to have `cmake` - check [install_cmake.sh](install_cmake.sh) to see how you can install it.
+
 
 
 ## Doing it in Docker
@@ -141,7 +143,7 @@ Compiling it:
 
 ```bash
 PYTHON_VERSION=3.9
-TENSORFLOW_VERSION=v2.7.0
+TENSORFLOW_VERSION=v2.6.2
 
 docker build \
     --build-arg PYTHON_VERSION=${PYTHON_VERSION} \

@@ -22,7 +22,7 @@ ENV PYTHON python${PYTHON_VERSION}
 RUN echo $PYTHON
 
 RUN $PYTHON -m pip install -U pip
-RUN $PYTHON -m pip install numpy wheel pybind11
+RUN $PYTHON -m pip install numpy~=1.19.2 wheel pybind11
 
 COPY ["build_wheel.sh", "install_cmake.sh", "./"]
 RUN bash build_wheel.sh
