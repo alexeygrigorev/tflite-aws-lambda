@@ -1,11 +1,17 @@
 FROM amazonlinux
 
 RUN yum groupinstall -y development
+RUN yum install -y wget
 
 WORKDIR /tflite
 
 ARG TENSORFLOW_VERSION
-RUN git clone --branch ${TENSORFLOW_VERSION} https://github.com/tensorflow/tensorflow.git 
+
+# RUN git clone --branch ${TENSORFLOW_VERSION} https://github.com/tensorflow/tensorflow.git 
+RUN wget https://github.com/tensorflow/tensorflow/archive/${TENSORFLOW_VERSION}.zip -O tensorflow.zip \
+    && unzip tensorflow.zip \
+    && mv tensorflow-* tensorflow \
+    && rm tensorflow.zip
 
 COPY install_python.sh . 
 

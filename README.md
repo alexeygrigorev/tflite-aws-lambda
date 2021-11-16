@@ -28,6 +28,21 @@ TENSORFLOW_VERSION=v2.4.4
 git clone --branch ${TENSORFLOW_VERSION} https://github.com/tensorflow/tensorflow.git
 ```
 
+### Downloading the source code
+
+Alternatively, you can download the source code and unpack it:
+
+```bash
+TENSORFLOW_VERSION=v2.4.4
+wget https://github.com/tensorflow/tensorflow/archive/${TENSORFLOW_VERSION}.zip -O tensorflow.zip
+unzip tensorflow.zip
+mv tensorflow-* tensorflow
+rm tensorflow.zip
+```
+
+That's faster than cloning
+
+
 ## Compiling TF-Lite
 
 ### Python 3.7
@@ -136,6 +151,8 @@ docker run --rm \
     tf-lite-lambda:${PYTHON_VERSION}-${TENSORFLOW_VERSION}
 ```
 
+## Script 
+
 Running it with one script:
 
 ```bash
@@ -143,6 +160,7 @@ PYTHON_VERSION=3.7
 TENSORFLOW_VERSION=v2.4.4
 ./build_wheel.sh ${PYTHON_VERSION} ${TENSORFLOW_VERSION}
 ```
+
 
 ## Sources
 
