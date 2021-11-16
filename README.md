@@ -127,14 +127,13 @@ The wheel will be located here:
 
 ## Compiling Tensorflow Lite 2.7+ 
 
-The process is the same, except a few thigs:
+The process for compiling TF-Lite 2.7+ is more complex:
 
-* Instead of `PYTHON` you need to set `CI_BUILD_PYTHON` 
-* Instead of running `build_pip_package.sh`, run `build_pip_package_with_cmake.sh`
-* You need more RAM. On my laptop with 16 Gb I had problems, so I ended up using an ec2 instance (`r5a.2xlarge`)
-
-You also need to have `cmake` - check [install_cmake.sh](install_cmake.sh) to see how you can install it.
-
+* Instead `PYTHON` you need to set `CI_BUILD_PYTHON` 
+* You have to have cmake (check [install_cmake.sh](install_cmake.sh) to see how you can install it)
+* Run `build_pip_package_with_cmake.sh` for installation, not `build_pip_package.sh`
+* You need to have Numpy includes when you compile it ([this is how you do it](https://github.com/alexeygrigorev/tflite-aws-lambda/blob/6a5e3e5/build_wheel.sh#L13))
+* You need a lot of RAM - around 24 GB. I ended up using an ec2 instance (`r5a.2xlarge`) for compiling it.
 
 
 ## Doing it in Docker
@@ -168,8 +167,8 @@ docker run --rm \
 Running it with one script:
 
 ```bash
-PYTHON_VERSION=3.7
-TENSORFLOW_VERSION=v2.4.4
+PYTHON_VERSION=3.8
+TENSORFLOW_VERSION=v2.7.0
 ./build_wheel_docker.sh ${PYTHON_VERSION} ${TENSORFLOW_VERSION}
 ```
 

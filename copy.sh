@@ -1,3 +1,5 @@
 #!/usr/bin/env bash
 
-cp `ls *.whl` ./results/
+PREFIX=./tensorflow/tensorflow/lite/tools/pip_package/gen/tflite_pip/${PYTHON}/dist
+cp $PREFIX/*.whl ./results/
+
