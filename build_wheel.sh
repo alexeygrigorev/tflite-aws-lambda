@@ -1,22 +1,14 @@
 #!/usr/bin/env bash
 
-PYTHON_VERSION=$1
-TENSORFLOW_VERSION=$2
+PREFIX="./tensorflow/tensorflow/lite/tools/pip_package"
 
-echo PYTHON_VERSION=${PYTHON_VERSION}
-echo TENSORFLOW_VERSION=${TENSORFLOW_VERSION}
+if [ -f "${PREFIX}/build_pip_package_with_cmake.sh" ]; then
+    # we're in tensorflow 2.7 + 
+    bash install_cmake.sh
 
-docker build \
-    --build-arg PYTHON_VERSION=${PYTHON_VERSION} \
-    --build-arg TENSORFLOW_VERSION=${TENSORFLOW_VERSION} \
-    -t tf-lite-lambda:${PYTHON_VERSION}-${TENSORFLOW_VERSION} \
-    .
-
-mkdir tflite
-
-docker run --rm \
-    -v $(pwd)/tflite:/tflite/results \
-    -u $(id -u ${USER}):$(id -g ${USER}) \
-    tf-lite-lambda:${PYTHON_VERSION}-${TENSORFLOW_VERSION}
-
-echo DONE
+    export CI_BUILD_PYTHON=${PYTHON}
+    sh ${PREFIX}/build_pip_package_with_cmake.sh
+else
+    # we're in tensorflow 2.6 or older - no need to install cmake
+    sh ${PREFIX}/build_pip_package.sh
+fi

@@ -125,13 +125,23 @@ The wheel will be located here:
 ```
 
 
+## Compiling Tensorflow Lite 2.7+ 
+
+The process is the same, except a few thigs:
+
+* Instead of `PYTHON` you need to set `CI_BUILD_PYTHON` 
+* Instead of running `build_pip_package.sh`, run `build_pip_package_with_cmake.sh`
+
+You also need to have `cmake` - check [install_cmake.sh](install_cmake.sh) to see how you can install it.
+
+
 ## Doing it in Docker
 
 Compiling it:
 
 ```bash
-PYTHON_VERSION=3.7
-TENSORFLOW_VERSION=v2.4.4
+PYTHON_VERSION=3.9
+TENSORFLOW_VERSION=v2.7.0
 
 docker build \
     --build-arg PYTHON_VERSION=${PYTHON_VERSION} \
@@ -158,7 +168,7 @@ Running it with one script:
 ```bash
 PYTHON_VERSION=3.7
 TENSORFLOW_VERSION=v2.4.4
-./build_wheel.sh ${PYTHON_VERSION} ${TENSORFLOW_VERSION}
+./build_wheel_docker.sh ${PYTHON_VERSION} ${TENSORFLOW_VERSION}
 ```
 
 
@@ -166,3 +176,4 @@ TENSORFLOW_VERSION=v2.4.4
 
 * https://github.com/alexeygrigorev/serverless-deep-learning
 * https://github.com/tpaul1611/python_tflite_for_amazonlinux
+* https://github.com/tensorflow/tensorflow/blob/master/tensorflow/lite/tools/pip_package/Dockerfile.py3

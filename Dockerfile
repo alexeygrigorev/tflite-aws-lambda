@@ -24,8 +24,8 @@ RUN echo $PYTHON
 RUN $PYTHON -m pip install -U pip
 RUN $PYTHON -m pip install numpy wheel pybind11
 
-RUN sh ./tensorflow/tensorflow/lite/tools/pip_package/build_pip_package.sh
-RUN mv ./tensorflow/tensorflow/lite/tools/pip_package/gen/tflite_pip/${PYTHON}/dist/*.whl .
+COPY ["build_wheel.sh", "install_cmake.sh", "./"]
+RUN bash build_wheel.sh
 
 COPY copy.sh . 
 
