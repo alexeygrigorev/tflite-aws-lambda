@@ -9,8 +9,22 @@ which is a CentOS-based distribution.
 In this repo, you'll find compiled binaries as well as the instructions 
 for compiling it yourself.
 
+## Using compiled TF-Lite
 
-## Cloning TensorFlow Lite
+Go to the `tflite` folder to check the available python/TF versions and select the one you need.
+
+Then use `pip` to install it:
+
+```bash
+https://github.com/alexeygrigorev/tflite-aws-lambda/blob/main/tflite/tflite_runtime-2.7.0-cp38-cp38-linux_x86_64.whl?raw=true
+```
+
+Note the `raw=true` at the end. Without it, pip will try to dowload the github page, not the actual wheel.
+
+
+## Compiling TF-Lite
+
+### Cloning TensorFlow Lite
 
 Latest available versions (as of 16 Nov 2021): 
 
