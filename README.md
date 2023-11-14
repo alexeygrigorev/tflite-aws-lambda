@@ -21,17 +21,59 @@ https://github.com/alexeygrigorev/tflite-aws-lambda/blob/main/tflite/tflite_runt
 
 Note the `raw=true` at the end. Without it, pip will try to dowload the github page, not the actual wheel.
 
+Latest available versions (as of 16 Nov 2023): 
+
+* `v2.14.0` (for Python 3.10 and 3.11 only)
+* `v2.7.0` (up to Python 3.9)
+* `v2.6.2` (up to Python 3.9)
+* `v2.5.2` (up to Python 3.9)
+* `v2.4.4` (up to Python 3.9)
+
+
+
+## Doing it in Docker
+
+### Script 
+
+Running it with one script:
+
+```bash
+PYTHON_VERSION=3.11
+TENSORFLOW_VERSION=v2.14.0
+./build_wheel_docker.sh ${PYTHON_VERSION} ${TENSORFLOW_VERSION}
+```
+
+### Runing without the script
+
+Compiling it:
+
+```bash
+PYTHON_VERSION=3.11
+TENSORFLOW_VERSION=v2.14.0
+
+docker build \
+    --build-arg PYTHON_VERSION=${PYTHON_VERSION} \
+    --build-arg TENSORFLOW_VERSION=${TENSORFLOW_VERSION} \
+    -t tf-lite-lambda:${PYTHON_VERSION}-${TENSORFLOW_VERSION} \
+    .
+```
+
+Extracting the wheel:
+
+```bash
+mkdir tflite
+
+docker run --rm \
+    -v $(pwd)/tflite:/tflite/results \
+    -u $(id -u ${USER}):$(id -g ${USER}) \
+    tf-lite-lambda:${PYTHON_VERSION}-${TENSORFLOW_VERSION}
+```
+
 
 ## Compiling TF-Lite
 
 ### Cloning TensorFlow Lite
 
-Latest available versions (as of 16 Nov 2021): 
-
-* `v2.7.0`
-* `v2.6.2`
-* `v2.5.2`
-* `v2.4.4`
 
 Check for the up-to-date list here: https://github.com/tensorflow/tensorflow/releases
 
@@ -148,43 +190,6 @@ The process for compiling TF-Lite 2.7+ is more complex:
 * Run `build_pip_package_with_cmake.sh` for installation, not `build_pip_package.sh`
 * You need to have Numpy includes when you compile it ([this is how you do it](https://github.com/alexeygrigorev/tflite-aws-lambda/blob/6a5e3e5/build_wheel.sh#L13))
 * You need a lot of RAM - around 24 GB. I ended up using an ec2 instance (`r5a.2xlarge`) for compiling it.
-
-
-## Doing it in Docker
-
-Compiling it:
-
-```bash
-PYTHON_VERSION=3.9
-TENSORFLOW_VERSION=v2.6.2
-
-docker build \
-    --build-arg PYTHON_VERSION=${PYTHON_VERSION} \
-    --build-arg TENSORFLOW_VERSION=${TENSORFLOW_VERSION} \
-    -t tf-lite-lambda:${PYTHON_VERSION}-${TENSORFLOW_VERSION} \
-    .
-```
-
-Extracting the wheel:
-
-```bash
-mkdir tflite
-
-docker run --rm \
-    -v $(pwd)/tflite:/tflite/results \
-    -u $(id -u ${USER}):$(id -g ${USER}) \
-    tf-lite-lambda:${PYTHON_VERSION}-${TENSORFLOW_VERSION}
-```
-
-## Script 
-
-Running it with one script:
-
-```bash
-PYTHON_VERSION=3.8
-TENSORFLOW_VERSION=v2.7.0
-./build_wheel_docker.sh ${PYTHON_VERSION} ${TENSORFLOW_VERSION}
-```
 
 
 ## Sources
