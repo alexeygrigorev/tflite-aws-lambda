@@ -1,7 +1,10 @@
-FROM amazonlinux
+FROM public.ecr.aws/lambda/python:3.10
 
 RUN yum groupinstall -y development
 RUN yum install -y wget
+
+# make sure it's 2.26
+RUN ldd --version
 
 WORKDIR /tflite
 
