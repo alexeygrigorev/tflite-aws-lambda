@@ -14,7 +14,7 @@ docker build \
     -t tf-lite-lambda:${PYTHON_VERSION}-${TENSORFLOW_VERSION} \
     .
 
-mkdir -f tflite
+mkdir -p tflite
 
 docker run --rm \
     -v $(pwd)/tflite:/tflite/results \
