@@ -23,15 +23,17 @@ if [ "${PYTHON_VERSION}" == "3.9" ]; then
 fi
 
 if [ "${PYTHON_VERSION}" == "3.10" ]; then
-    wget https://repo.anaconda.com/miniconda/Miniconda3-py310_23.9.0-0-Linux-x86_64.sh
-    bash Miniconda3-py310_23.9.0-0-Linux-x86_64.sh -b
+    ARCH=`uname -i`
+    wget https://repo.anaconda.com/miniconda/Miniconda3-py310_23.9.0-0-Linux-${ARCH}.sh
+    bash Miniconda3-py310_23.9.0-0-Linux-${ARCH}.sh -b
     ln -s /root/miniconda3/bin/python3.10 /bin/python3.10
     exit 0
 fi
 
 if [ "${PYTHON_VERSION}" == "3.11" ]; then
-    wget https://repo.anaconda.com/miniconda/Miniconda3-py311_23.9.0-0-Linux-x86_64.sh
-    bash Miniconda3-py311_23.9.0-0-Linux-x86_64.sh -b
+    ARCH=`uname -i`
+    wget https://repo.anaconda.com/miniconda/Miniconda3-py311_23.9.0-0-Linux-${ARCH}.sh
+    bash Miniconda3-py311_23.9.0-0-Linux-${ARCH}.sh -b
     ln -s /root/miniconda3/bin/python3.11 /bin/python3.11
     exit 0
 fi
